@@ -1,0 +1,33 @@
+Задание
+
+Напиши функцию countRussianLetters(s string) map[rune]int, которая принимает строку s и возвращает карту,
+содержащую количество каждой русской буквы в строке.
+
+func countRussianLetters(s string) map[rune]int {
+    counts := make(map[rune]int)
+    for _, char := range s {
+        if isRussianLetter(char) {
+            // ..
+        }
+    }
+    return counts
+}
+
+Пример использования:
+func main() {
+    result := countRussianLetters("Привет, мир!")
+    for key, value := range result {
+        fmt.Printf("%c: %d ", key, value) // в: 1 е: 1 т: 1 м: 1 п: 1 р: 2 и: 2
+    }
+}
+
+Критерии приемки
+
+Функция countRussianLetters должна корректно подсчитывать количество каждой русской буквы в
+строке.
+Функция должна игнорировать символы, не являющиеся русскими буквами.
+Регистр букв не должен влиять на результат подсчета.
+Функция должна возвращать карту, где ключами являются русские буквы, а значениями — их
+количество в строке.
+
+Решение расположи по следующему пути: course1/13.popular_package/5.package_u8/task1.13.5.2

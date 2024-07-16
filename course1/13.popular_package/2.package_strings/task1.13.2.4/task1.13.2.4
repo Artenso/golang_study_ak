@@ -1,0 +1,30 @@
+Задание
+
+Напиши функцию для генерации случайного ключа активации с использованием функции strings.Join.
+Ключ должен иметь формат XXXX-XXXX-XXXX-XXXX, где X — это случайная цифра или буква.
+
+package main
+
+import (
+    "fmt"
+    "math/rand"
+    "strings"
+    "time"
+)
+
+func generateActivationKey() string {
+    //...
+}
+
+func main() {
+    activationKey := generateActivationKey()
+    fmt.Println(activationKey) // UQNI-NYSI-ZVYB-ZEFQ
+}
+
+Критерии приемки
+
+Ключ активации выполнен в формате XXXX-XXXX-XXXX-XXXX.
+Каждая часть ключа состоит из четырех символов (цифр или букв).
+Ключ случайно сгенерирован при каждом запуске программы.
+Использована функция strings.Join.
+Код покрыт тестами 100%.
