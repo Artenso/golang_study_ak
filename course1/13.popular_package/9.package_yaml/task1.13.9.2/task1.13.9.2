@@ -1,0 +1,37 @@
+Задание
+
+Необходимо реализовать функцию getConfigFromYAML, которая будет получать данные из YAML и
+возвращать структуру Config и ошибку, если она возникнет.
+
+func getConfigFromYAML(data []byte) (Config, error) {
+    // ваш код здесь
+}
+
+Структура Config имеет следующий вид:
+type Config struct {
+    Server Server `yaml:"server"`
+    Db Db `yaml:"db"`
+}
+
+type Server struct {
+    Port string `yaml:"port"`
+}
+
+type Db struct {
+    Host string `yaml:"host"`
+    Port string `yaml:"port"`
+    User string `yaml:"user"`
+    Password string `yaml:"password"`
+}
+
+Критерии приемки
+
+Функция getConfigFromYAML должна принимать входные данные в формате YAML и возвращать
+структуру Config и ошибку.
+В случае успешного получения данных из YAML, функция должна возвращать заполненную структуру
+Config.
+Если возникнет ошибка при получении данных из YAML, функция должна возвращать ошибку.
+Возвращаемая структура Config должна содержать правильные значения полей Server и Db,
+полученные из YAML.
+
+Решение расположи по следующему пути: course1/13.popular_package/9.package_yaml/task1.13.9.2

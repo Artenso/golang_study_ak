@@ -1,0 +1,44 @@
+Задание
+
+Реализуй функцию getYAML , которая принимает на вход срез структур типа Config и возвращает
+строку в формате YAML и ошибку, если она возникнет. Функция должна преобразовывать данные из среза
+Config в YAML-строку.
+
+Структура Config имеет следующий вид:
+import (
+    "fmt"
+    "gopkg.in/yaml.v2"
+)
+
+type Config struct {
+    Server Server `yaml:"server"`
+    Db Db `yaml:"db"`
+}
+
+type Server struct {
+    Port string `yaml:"port"`
+}
+
+type Db struct {
+    Host string `yaml:"host"`
+    Port string `yaml:"port"`
+    User string `yaml:"user"`
+    Password string `yaml:"password"`
+}
+
+Пример результирующей YAML-строки:
+server:
+    port: "8080"
+db:
+    host: "localhost"
+    port: "5432"
+    user: "admin"
+    password: "password123"
+
+Критерии приемки
+
+порт сервера, хост и порт базы данных, а также данные для аутентификации в базе данных.
+В случае возникновения ошибки при преобразовании данных в YAML, функция getYAML должна
+возвращать ошибку.
+
+Решение расположи по следующему пути: course1/13.popular_package/9.package_yaml/task1.13.9.1

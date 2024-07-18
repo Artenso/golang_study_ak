@@ -1,0 +1,32 @@
+Задание
+
+Напиши функцию getReader(b *bytes.Buffer) *bufio.Reader, которая принимает объект bytes.Buffer с данными
+в виде строки и возвращает объект bufio.Reader.
+
+func getReader(b *bytes.Buffer) *bufio.Reader {
+    // Ваш код здесь
+}
+
+Пример использования
+
+package main
+
+func main() {
+    // Create a buffer for testing
+    buffer := bytes.NewBufferString("Hello, World!")
+    b := make([]byte, 13)
+    r := getReader(buffer)
+    r.Read(b)
+    fmt.Println(string(b)) // Hello, World!
+}
+
+Критерии приемки
+
+Функция getReader должна принимать объект bytes.Buffer и возвращать объект bufio.Reader.
+Возвращаемый объект bufio.Reader должен быть инициализирован с использованием переданного
+объекта bytes.Buffer.
+Функция getReader должна быть написана на языке программирования Golang.
+Все требуемые зависимости должны быть импортированы и доступны в функции getReader.
+Функция getReader должна быть полностью документирована и объяснена в описании задачи.
+
+Решение расположи по следующему пути: course1/13.popular_package/6.package_buffer/task1.13.6.1

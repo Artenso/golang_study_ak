@@ -1,0 +1,27 @@
+Задание
+
+Напиши функцию getDataString(b *bytes.Buffer) string, которая принимает в качестве аргумента объект
+bytes.Buffer с данными типа string и возвращает строку.
+
+Пример использования
+func main() {
+    // Create a new buffer
+    buffer := bytes.NewBufferString("Hello, World!")
+
+    // Call the getDataString function
+    result := getDataString(buffer)
+
+    // Check if the result matches the expected output
+    expected := "Hello, World!"
+    if result != expected {
+        panic(fmt.Sprintf("Expected %s, but got %s", expected, result))
+    }
+}
+
+Критерии приемки
+
+Функция getDataString должна принимать аргумент типа *bytes.Buffer.
+Функция getDataString должна возвращать значение типа string.
+Функция getDataString должна возвращать строку, содержащую данные из объекта bytes.Buffer.
+
+Решение расположи по следующему пути: course1/13.popular_package/6.package_buffer/task1.13.6.3
