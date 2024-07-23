@@ -1,0 +1,27 @@
+Задание
+
+Отредактируй программу так, чтобы она соответствовала критериям приемки:
+
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	ch := make(chan string)
+	myPanic(ch)
+	fmt.Println(<-ch)
+}
+
+func myPanic(ch chan string) {
+	panic("my panic message")
+}
+
+Критерии приемки
+
+Программа должна завершиться без ошибок.
+Программа должна напечатать сообщение “my panic message” из паники.
+Программа должна работать синхронно, без использования горутин.
+
+Решение расположи по следующему пути: course1/15.gorounes/4.gorounes_defer/task1.15.4.3
