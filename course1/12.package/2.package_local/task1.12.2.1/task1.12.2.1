@@ -1,0 +1,42 @@
+Задание
+
+Создай функционал для локального пакета mymath, который будет повторять функционал встроенного
+пакета math в языке Golang.
+
+package main
+
+import (
+"fmt"
+"test/mymath"
+)
+
+func main() {
+    x := 4
+    y := 2
+    fmt.Println("Square root of", x, "is", mymath.Sqrt(x))
+    fmt.Println("Ceil of", x, "is", mymath.Ceil(x))
+    fmt.Println("Floor of", x, "is", mymath.Floor(x))
+    fmt.Println("Power of", x, "to", y, "is", mymath.Pow(x, y))
+    fmt.Println("Max of", x, "and", y, "is", mymath.Max(x, y))
+    fmt.Println("Min of", x, "and", y, "is", mymath.Min(x, y))
+}
+
+Пример пакета mymath:
+
+package mymath
+
+import "math"
+
+func Sqrt(x float64) float64 {
+    return math.Sqrt(x)
+}
+// и т.д.
+
+Критерии приемки
+
+Создан модуль test.
+Пакет mymath находится внутри модуля test.
+Функционал локального пакета mymath должен повторять функционал встроенного пакета math.
+Функции с примерами использования должны быть использованы в функции main.
+
+Решение расположи по следующему пути: course1/12.package/2.package_local/task1.12.2.1
