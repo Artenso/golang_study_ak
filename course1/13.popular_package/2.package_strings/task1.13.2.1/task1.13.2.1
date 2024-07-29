@@ -1,0 +1,32 @@
+Задание
+
+Напиши функцию CountWordsInText(txt string, words []string) map[string]int, которая будет подсчитывать
+количество вхождений каждого слова из заданного списка в тексте.
+При подсчете слов в тексте необходимо игнорировать регистр с помощью функции strings.ToLower(). Для
+разделения текста на слова используй функцию strings.Fields().
+
+package main
+
+func CountWordsInText(txt string, words []string) map[string]int {
+    // Твой код для подсчета слов в тексте
+}
+
+func main() {
+    txt := `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit
+        amet ipsum mauris.
+        Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+        Praesent et diam eget libero egestas mattis sit amet vitae augue.`
+    words := []string{"sit", "amet", "lorem"}
+    result := CountWordsInText(txt, words)
+    fmt.Println(result) // map[amet:2 lorem:1 sit:3]
+}
+
+Критерии приемки
+
+Функция двозвращает словарь, в котором ключом является слово из списка, а значением
+— количество вхождений этого слова в тексте.
+Использована функция strings.ToLower() для игнорирования регистра при подсчете слов в тексте.
+Для разделения текста на слова использована функция strings.Fields().
+Код 100% покрыт тестами.
+
+Решение расположи по следующему пути: course1/13.popular_package/2.package_strings/task1.13.2.1
