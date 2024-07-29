@@ -1,0 +1,27 @@
+Задание
+
+Реализуй функцию writeJSON(filePath string, data []User) error, которая будет записывать данные
+пользователей в формате JSON в указанный файл.
+
+Структура User имеет следующие поля:
+type User struct {
+    Name string `json:"name"`
+    Age int `json:"age"`
+    Comments []Comment `json:"comments"`
+}
+
+Структура Comment имеет следующее поле:
+type Comment struct {
+    Text string `json:"text"`
+}
+
+Функция writeJSON должна создавать директорию, если она не существует, с помощью функции
+os.MkdirAll.
+
+Критерии приемки
+
+Функция writeJSON должна записывать данные пользователей в формате JSON в указанный файл.
+Если директория не существует, функция должна создать ее с помощью os.MkdirAll.
+Функция должна возвращать ошибку, если произошла ошибка при записи файла.
+
+Решение расположи по следующему пути: course1/13.popular_package/8.package_json/task1.13.8.3

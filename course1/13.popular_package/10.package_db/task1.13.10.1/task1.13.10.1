@@ -1,0 +1,50 @@
+Задание
+
+Создай функции для работы с таблицей пользователей(users.db) в базе данных SQLite3. Ниже приведена
+структура таблицы пользователей:
+
+type User struct {
+    ID int `json:"id"`
+    Name string `json:"name"`
+    Age int `json:"age"`
+}
+
+func CreateUserTable() error {
+    //...
+}
+
+func InsertUser(user User) error {
+    //...
+}
+
+func SelectUser(id int) (User, error) {
+    //...
+}
+
+func UpdateUser(user User) error {
+    //...
+}
+
+func DeleteUser(id int) error {
+    //...
+}
+
+Тебе нужно реализовать следующие функции:
+
+1 CreateUserTable() — функция для создания таблицы пользователей в базе данных.
+2 InsertUser(user User) — функция для добавления нового пользователя в таблицу.
+3 SelectUser(id int) (User, error) — функция для выборки пользователя по его идентификатору, если
+пользователя нет вернуть ошибку.
+4 UpdateUser(user User) — функция для обновления информации о пользователе.
+5 DeleteUser(id int) — функция для удаления пользователя из таблицы.
+
+Критерии приемки
+
+Функция CreateUserTable() должна создавать таблицу пользователей в базе данных.
+Функция InsertUser(user User) должна добавлять нового пользователя в таблицу.
+Функция UpdateUser(user User) должна обновлять информацию о пользователе.
+Функция DeleteUser(id int) должна удалять пользователя из таблицы.
+Функции должны возвращать ошибку (error)
+Таблицу не добавлять в репозиторий
+
+Решение расположи по следующему пути: course1/13.popular_package/10.package_db/task1.13.10.1

@@ -1,0 +1,67 @@
+Задание
+
+Напиши функцию getUsersFromJSON, которая принимает в качестве аргумента срез байт data и возвращает
+срез структур User и ошибку error.
+
+Структура User имеет следующие поля:
+type User struct {
+    Name string `json:"name"`
+    Age int `json:"age"`
+    Comments []Comment `json:"comments"`
+}
+
+Структура Comment имеет поле Text типа string:
+type Comment struct {
+    Text string `json:"text"`
+}
+
+Пример работы функции
+
+func main(){
+    jsonData := (
+        `[
+            {
+                "name": "John",
+                "age": 30,
+                "comments": [
+                    {"text": "Great post!"},
+                    {"text": "I agree"}
+                ]
+            },
+            {
+                "name": "Alice",
+                "age": 25,
+                "comments": [
+                    {"text": "Nice article"}
+                ]
+            }
+    ]`)
+
+    users, err := getUsersFromJSON(jsonData)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    for _, user := range users {
+        fmt.Println("Name:", user.Name)
+        fmt.Println("Age:", user.Age)
+        fmt.Println("Comments:")
+        for _, comment := range user.Comments {
+            fmt.Println("- ", comment.Text)
+        }
+        fmt.Println()
+    }
+}
+
+Функция getUsersFromJSON должна производить декодирование данных из формата JSON и возвращать
+срез структур User. Если произошла ошибка при декодировании, функция должна возвращать ошибку.
+
+Критерии приемки
+
+Функция getUsersFromJSON должна принимать срез байт data и возвращать срез структур User и
+ошибку error.
+Данные должны быть декодированы из формата JSON.
+Если произошла ошибка при декодировании, функция должна возвращать ошибку.
+Функция должна возвращать только необходимый результат программы.
+
+Решение расположи по следующему пути: course1/13.popular_package/8.package_json/task1.13.8.2

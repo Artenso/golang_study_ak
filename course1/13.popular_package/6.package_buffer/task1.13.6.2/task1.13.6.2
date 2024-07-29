@@ -1,0 +1,37 @@
+Задание
+
+Напиши функцию getScanner, которая принимает в качестве аргумента объект типа bytes.Buffer,
+содержащий строковые данные, и возвращает объект типа bufio.Scanner.
+
+func getScanner(b *bytes.Buffer) *bufio.Scanner {
+    // Ваш код здесь
+}
+
+Пример использования
+package main
+
+func main() {
+    // Create a buffer with some data
+    data := []byte("Hello\n,\n World!")
+    buffer := bytes.NewBuffer(data)
+
+    // Call the getScanner function
+    scanner := getScanner(buffer)
+
+    // Verify that the returned reader is not nil
+    if scanner == nil {
+        panic("Expected non-nil reader, got nil")
+    }
+    for scanner.Scan() {
+        println(scanner.Text())
+    }
+}
+
+Критерии приемки
+
+Функция getScanner должна принимать аргумент типа *bytes.Buffer.
+Возвращаемый объект bufio.Scanner должен быть инициализирован с данными из аргумента
+bytes.Buffer.
+Функция getScanner должна быть реализована на языке программирования Golang.
+
+Решение расположи по следующему пути: course1/13.popular_package/6.package_buffer/task1.13.6.2

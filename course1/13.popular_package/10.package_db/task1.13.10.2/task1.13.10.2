@@ -1,0 +1,78 @@
+Задание
+
+Необходимо создать функции для работы с таблицей пользователей в базе данных SQLite3 с
+использованием пакета database и squirrel. Ниже приведены функции, которые нужно реализовать.
+
+type User struct {
+    ID int
+    Username string
+    Email string
+}
+
+// Создание таблицы пользователей
+func CreateUserTable() error {
+    // Твой код здесь
+}
+
+// Вставка пользователя в таблицу
+func InsertUser(user User) error {
+    // Твой код здесь
+}
+
+// Выборка пользователя из таблицы
+func SelectUser(userID int) (User, error) {
+    // Твой код здесь
+}
+
+// Обновление информации о пользователе
+func UpdateUser(user User) error {
+    // Твой код здесь
+}
+
+// Удаление пользователя из таблицы
+func DeleteUser(userID int) error {
+    // Твой код здесь
+}
+
+// Функция для подготовки запроса
+func PrepareQuery(operation string, table string, user User) (string, []interface{}, error) {
+    // Твой код здесь
+}
+
+// InsertUser inserts a user into the user table
+func InsertUser(user User) error {
+    db, err := sql.Open("sqlite3", "users.db")
+    if err != nil {
+        return err
+    }
+    defer db.Close()
+
+    query, args, err := PrepareQuery("insert", "users", user)
+    if err != nil {
+        return err
+    }
+
+    _, err = db.Exec(query, args...)
+    if err != nil {
+     return err
+    }
+
+    return nil
+}
+
+Критерии приемки
+
+Создана функция CreateUserTable, которая формирует таблицу пользователей в базе данных.
+Создана функция InsertUser, которая вставляет пользователя в таблицу.
+Создана функция SelectUser, которая выбирает пользователя из таблицы по указанному идентификатору.
+Создана функция UpdateUser, которая обновляет информацию о пользователе.
+Создана функция DeleteUser, которая удаляет пользователя из таблицы.
+Создана функция PrepareQuery, которая подготавливает запрос с использованием переданных
+параметров.
+Все функции insert, select, update, delete используют функцию PrepareQuery, где операция (operation)
+соответствует insert, select, update или delete.
+
+Примечание. Пожалуйста, убедись, что твой код полностью реализует требования задачи и соответствует
+приведенным функциям и структурам данных.
+
+Решение расположи по следующему пути: course1/13.popular_package/10.package_db/task1.13.10.2
