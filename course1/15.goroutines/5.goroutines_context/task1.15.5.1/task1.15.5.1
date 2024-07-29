@@ -1,0 +1,45 @@
+Задание
+
+Реализуй функцию contextWithDeadline, которая принимает следующие аргументы:
+— ctx - контекст выполнения;
+— contextDeadline — длительность времени до истечения контекста;
+— timeAfter - длительность времени, после которого будет возвращен результат.
+
+Функция должна создать новый контекст с установленным временем истечения (contextDeadline)
+относительно текущего времени. Затем функция должна выбрать первое событие, которое произойдет:
+истечение контекста или истечение времени (timeAfter). В зависимости от результата, функция должна
+вернуть соответствующую строку:
+— Если контекст истек, вернуть context deadline exceeded.
+— Если время (timeAfter) истекло, вернуть “time after exceeded”.
+
+package main
+
+import (
+	"context"
+	"time"
+)
+
+func main() {
+	var res string
+	res = contextWithDeadline(context.Background(), 1*time.Second, 2*time.Second)
+	println(res)
+	res = contextWithDeadline(context.Background(), 2*time.Second, 1*time.Second)
+	println(res)
+	/* Output:
+	   context deadline exceeded
+	   time after exceeded
+	*/
+}
+
+func contextWithDeadline(ctx context.Context, contextDeadline time.Duration, timeAfter time.Duration) string {
+	var cancel context.CancelFunc
+	defer cancel()
+	// Place your code here
+}
+
+Функция contextWithDeadline должна корректно создавать контекст с установленным временем
+истечения.
+Функция должна вернуть context deadline exceeded, если контекст истек.
+Функция должна вернуть time after exceeded,если время (timeAfter) истекло.
+
+Решение расположи по следующему пути: course1/15.goroutines/5.goroutines_context/task1.15.5.1

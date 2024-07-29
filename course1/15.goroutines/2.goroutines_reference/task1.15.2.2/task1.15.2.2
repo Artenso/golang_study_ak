@@ -1,0 +1,56 @@
+Задание
+
+Типичная задача, с которой ты можешь столкнуться в работе — исправить логику списания бонусов или
+работать с любыми другими операциями начисления и списания.
+Исправь функцию DeductBonuses, чтобы она корректно списывала бонусы у пользователей.
+
+type User struct {
+    ID int
+    Name string
+    Bonuses int
+}
+
+type BonusOperation struct {
+    UserID int
+    Amount int
+}
+
+var users = []*User{
+    {ID: 1, Name: "Bob", Bonuses: 100},
+    {ID: 2, Name: "Alice", Bonuses: 200},
+    {ID: 3, Name: "Kate", Bonuses: 300},
+    {ID: 4, Name: "Tom", Bonuses: 400},
+    {ID: 5, Name: "John", Bonuses: 500},
+}
+
+func main() {
+    bonusOperations := []BonusOperation{
+        {UserID: 1, Amount: 10},
+        {UserID: 2, Amount: 20},
+        {UserID: 3, Amount: 30},
+        {UserID: 4, Amount: 40},
+        {UserID: 5, Amount: 50},
+    }
+    DeductBonuses(users, bonusOperations)
+    for _, user := range users {
+        // fmt.Printf
+        fmt.Printf("User %s has %d bonuses\n", user.Name, user.Bonuses)
+    }
+}
+
+// DeductBonuses - вычитает бонусы у пользователя
+func DeductBonuses(users []*User, bonusesOperations []BonusOperation) {
+    for i, user := range users {
+        go func() { // исправить анонимную функцию, не удаляя ее
+            // здесь мы как будто обращаемся во внешний сервис для списания бонусов
+            user.Bonuses -= bonusesOperations[i].Amount
+        }()
+    }
+}
+
+Критерии приемки
+
+Функция DeductBonuses должна корректно списывать бонусы у пользователей.
+В функции DeductBonuses должна использоваться анонимная функция с циклом for range
+
+Решение расположи по следующему пути: course1/15.gorounes/2.gorounes_reference/task1.15.2.2

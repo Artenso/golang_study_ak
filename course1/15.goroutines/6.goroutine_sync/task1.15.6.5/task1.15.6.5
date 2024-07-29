@@ -1,0 +1,70 @@
+Задание
+
+У тебя есть код, реализующий конкурентный кэш для любых объектов на языке программирования Golang.
+Задача — описать, что делает этот код и как он работает.
+
+    "fmt"
+    "strconv"
+    "strings"
+    "sync"
+)
+
+type User struct {
+	ID   int
+	Name string
+}
+
+type Cache struct {
+}
+
+func NewCache() *Cache {
+}
+
+func (c *Cache) Set(key string, user *User) {
+}
+
+func (c *Cache) Get(key string) interface{} {
+}
+
+func keyBuilder(keys ...string) string {
+}
+
+func GetUser(i interface{}) *User {
+	return i.(*User)
+}
+
+func main() {
+	cache := NewCache()
+	for i := 0; i < 100; i++ {
+		go cache.Set(keyBuilder("user", strconv.Itoa(i)), &User{
+			ID:   i,
+			Name: fmt.Sprint("user-", i),
+		})
+	}
+	for i := 0; i < 100; i++ {
+		go func(i int) {
+			raw := cache.Get(keyBuilder("user", strconv.Itoa(i)))
+			fmt.Println(GetUser(raw))
+		}(i)
+	}
+}
+
+Критерии приемки
+
+Код предоставляет структуру User, которая содержит поля ID и Name.
+Код предоставляет структуру Cache, которая реализует конкурентный кэш для любых объектов.
+Код предоставляет функцию NewCache(), которая создает новый экземпляр кэша.
+Код предоставляет метод Set(key string, user *User), который добавляет объект user в кэш по
+указанному ключу key.
+Код предоставляет функцию keyBuilder(keys ...string) string, которая объединяет строки keys в одну
+строку, разделенную символом “:”.
+Код создает 100 горутин, каждая из которых добавляет объект User в кэш с уникальным ключом.
+Код создает 100 горутин, каждая из которых получает объект из кэша по уникальному ключу и
+выводит его на экран.
+
+Примечание. 
+
+В этом случае требуется только описание функциональности и структуры кода, поэтому не
+нужно предоставлять финальный результат выполнения программы в критериях приемки.
+
+Решение расположи по следующему пути: course1/15.gorounes/6.goroune_sync/task1.15.6.5

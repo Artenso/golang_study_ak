@@ -1,0 +1,33 @@
+Задание
+
+Создай программу на языке Golang, которая демонстрирует применение примитива синхронизации
+sync.Pool. Твоя программа должна использовать структуры и другие типы данных для решения задачи.
+
+package main
+import (
+"sync"
+"testing"
+)
+type Person struct {
+Age int
+}
+var personPool = // sync.Pool of Person
+func BenchmarkWithoutPool(b *testing.B) {
+var p *Person
+b.ReportAllocs()
+b.ResetTimer()
+// benchmark code
+}
+func BenchmarkWithPool(b *testing.B) {
+var p *Person
+b.ReportAllocs()
+b.ResetTimer()
+// benchmark code
+}
+
+Критерии приемки
+
+Бенчмарк должен быть расположен в файле main_test.go.
+Бенчмарк должен содержать две функции: BenchmarkWithoutPool и BenchmarkWithPool.
+Бенчмарк должен использовать sync.Pool для уменьшения количества аллокаций.
+Бенчмарк должен выводить информацию о количестве аллокаций.

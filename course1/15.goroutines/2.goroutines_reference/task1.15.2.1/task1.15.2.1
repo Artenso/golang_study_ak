@@ -1,0 +1,51 @@
+Задание
+
+Исправь программу, чтобы она выводила все элементы слайса на экран.
+
+var ch = make(chan int)
+
+const (
+	one = iota + 1
+	two
+	three
+	four
+	five
+)
+
+func main() {
+	numbers := []int{one, two, three, four, five}
+	storeNumbers(numbers)
+	print(ch)
+}
+func print(data chan int) {
+	if len(os.Getenv("DEBUG")) != 0 {
+		return
+	}
+	go func() {
+		time.Sleep(1 * time.Second)
+		close(ch)
+	}()
+	for v := range data {
+		fmt.Println(v)
+	}
+}
+func storeNumbers(numbers []int) {
+	for _, num := range numbers {
+		go func() { // исправить, но не убирать анонимную функцию
+			go write(num)
+		}()
+	}
+}
+func write(n int) {
+	ch <- n
+}
+
+
+Критерии приемки
+
+Каждый элемент слайса должен быть выведен на экран.
+Все горутины должны завершиться корректно.
+Программа должна быть написана на языке Golang.
+Код должен быть оформлен в виде функции main в пакете main.
+Все необходимые импорты должны быть указаны.
+Канал должен содержать все элементы слайса.

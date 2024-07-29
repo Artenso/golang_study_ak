@@ -1,0 +1,34 @@
+Задание
+
+Реализуй функцию contextWithTimeout, которая будет создавать контекст с заданным таймаутом и
+возвращать результат в виде строки.
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"time"
+)
+
+func main() {
+	var res string
+	res = contextWithTimeout(context.Background(), 1*time.Second, 2*time.Second)
+	fmt.Println(res)
+	res = contextWithTimeout(context.Background(), 2*time.Second, 1*time.Second)
+	fmt.Println(res)
+}
+
+func contextWithTimeout(ctx context.Context, contextTimeout time.Duration, timeAfter time.Duration) string {
+	//
+}
+
+
+Критерии приемки
+
+Функция contextWithTimeout должна принимать контекст, длительность таймаута контекста и 
+длительность времени ожидания в качестве аргументов.
+Функция должна создавать контекст с заданным таймаутом.
+Если контекст превышает заданный таймаут, функция должна возвращать строку «превышено время ожидания контекста».
+Если время ожидания превышает заданный таймаут контекста, функция должна возвращать строку «превышено время ожидания».
+Программа должна выводить результат работы функции contextWithTimeout на экран.
