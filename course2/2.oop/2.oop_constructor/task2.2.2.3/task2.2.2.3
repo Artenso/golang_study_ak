@@ -1,0 +1,41 @@
+Задание
+
+Создай конструктор для объекта Customer, который позволяет задавать различные опции при создании
+экземпляра. В этом случае опции позволяют задавать имя и тип счета для клиента.
+
+package main
+
+import (
+	"fmt"
+)
+
+type Account interface {
+	Deposit(amount float64)
+	Withdraw(amount float64) error
+	Balance() float64
+}
+
+func main() {
+	savings := &SavingsAccount{}
+	savings.Deposit(1000)
+	customer := NewCustomer(1, WithName("John Doe"), WithAccount(savings))
+	err := customer.Account.Withdraw(100)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("Customer: %v, Balance: %v\n", customer.Name, customer.Account.Balance())
+}
+
+Критерии приемки
+
+Конструктор NewCustomer создает экземпляр Customer с заданными опциями.
+Опция WithName устанавливать имя клиента.
+Метод Withdraw корректно снимает деньги со счета клиента, если на счете достаточно средств.
+SavingsAccount не может совершать операции снятия при балансе меньше 1000
+CheckingAccount не может совершать операции снятия при балансе меньше запрашиваемой суммы.
+Обе реализации конкурентно-безопасны.
+При создании клиента с опциями имя и баланс счета установлены корректно.
+При выполнении кода в функции main выводится имя клиента и баланс его счета.
+Покрытие тестами 100%
+
+Решение расположи по следующему пути: course2/2.oop/2.oop_constructor/task2.2.2.3

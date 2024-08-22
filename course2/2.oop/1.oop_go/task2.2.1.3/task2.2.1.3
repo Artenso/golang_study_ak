@@ -1,0 +1,47 @@
+Задание
+
+Создай абстракцию для симуляции заказов в ресторане. В коде представлены две структуры:
+DineInOrder — заказ на месте.
+TakeAwayOrder — заказ на вынос.
+
+Обе структуры реализуют интерфейс Order.
+
+Каждая структура имеет методы для добавления и удаления предметов из заказа, а также для получения
+деталей заказа.
+
+package main
+
+import (
+	"fmt"
+)
+
+type Order interface {
+	AddItem(item string, quantity int) error
+	RemoveItem(item string) error
+	GetOrderDetails() map[string]int
+}
+
+func ManageOrder(o Order) {
+	o.AddItem("Pizza", 2)
+	o.AddItem("Burger", 1)
+	o.RemoveItem("Pizza")
+	fmt.Println(o.GetOrderDetails())
+}
+
+func main() {
+	dineIn := &DineInOrder{orderDetails: make(map[string]int)}
+	takeAway := &TakeAwayOrder{orderDetails: make(map[string]int)}
+	ManageOrder(dineIn)
+	ManageOrder(takeAway)
+}
+
+
+Созданы абстракцию для симуляции заказов в ресторане.
+Реализован интерфейс Order для структур DineInOrder и TakeAwayOrder.
+Добавлены методы AddItem, RemoveItem и GetOrderDetails для каждой структуры.
+При добавлении предмета в заказ количество имеет значение больше 0
+Из заказа удаляется только предмет, который существует в этом заказе.
+Получены детали заказа после добавления и удаления предметов.
+Детали заказа выводятся на экран после каждого управления заказом.
+
+Решение расположи по следующему пути: course2/2.oop/1.oop_go/task2.2.1.3

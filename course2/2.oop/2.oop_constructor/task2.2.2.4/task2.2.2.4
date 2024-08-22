@@ -1,0 +1,46 @@
+Задание
+
+Реализуй конструктор объекта LogSystem с функциональными опциями. Конструктор должен принимать
+различные опции для настройки логгера, который будет использоваться в системе логирования.
+
+package main
+
+import (
+	"io"
+	"os"
+)
+
+// Logger interface
+type Logger interface {
+	Log(message string)
+}
+
+// FileLogger struct
+// ...
+// ConsoleLogger struct
+type ConsoleLogger struct {
+	out io.ReadWriter
+}
+
+// LogOption functional option type
+type LogOption func(*LogSystem)
+
+func main() {
+	file, _ := os.Create("log.txt")
+	defer file.Close()
+	fileLogger := FileLogger{file: file}
+	logSystem := NewLogSystem(WithLogger(fileLogger))
+	logSystem.Log("Hello, world!")
+}
+
+Критерии приемки
+
+Конструктор NewLogSystem принимает функциональные опции и настраивет логгер в соответствии с
+переданными опциями.
+Опция WithLogger устанавливает переданный логгер в поле logger структуры LogSystem.
+Реализация логгера FileLogger записывет сообщение в файл.
+При выполнении кода в функции main создается файл log.txt, в этот файл записывается переданное
+сообщение.
+Покрытие тестами 100%.
+
+Решение расположи по следующему пути: course2/2.oop/2.oop_constructor/task2.2.2.4

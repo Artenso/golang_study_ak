@@ -1,0 +1,45 @@
+Задание
+
+Создать абстракцию для логгера в языке программирования Golang. В коде предоставлен пример
+реализации двух типов логгеров: ConsoleLogger, FileLogger. Задача — создать интерфейс Logger и
+реализовать метод Log для каждого типа логгера.
+
+package main
+
+import (
+	"log"
+	"os"
+)
+
+type RemoteLogger struct {
+	Address string
+}
+
+func LogAll(loggers []Logger, message string) {
+	for _, logger := range loggers {
+		err := logger.Log(message)
+		if err != nil {
+			log.Println("Failed to log message:", err)
+		}
+	}
+}
+
+func main() {
+	consoleLogger := &ConsoleLogger{Writer: os.Stdout}
+	fileLogger := &FileLogger{File: os.Stdout} // Здесь замени на открытие реального файла, но для примера мы будем использовать os.Stdout
+	loggers := []Logger{consoleLogger, fileLogger}
+	LogAll(loggers, "This is a test log message.")
+}
+
+
+Критерии приемки
+
+Создан интерфейс Logger с методом Log, который принимает сообщение типа string и возвращает
+ошибку типа error.
+Реализован метод Log для каждого типа логгера: ConsoleLogger, FileLogger и RemoteLogger.
+Метод Log у ConsoleLogger выводит сообщение на консоль.
+Метод Log у FileLogger записывает сообщение в файл.
+Все логгеры использованы в функции LogAll для записи одного и того же сообщения.
+При возникновении ошибки при записи сообщения функция LogAll выводит сообщение об ошибке в лог.
+
+Решение расположи по следующему пути: course2/2.oop/1.oop_go/task2.2.1.2

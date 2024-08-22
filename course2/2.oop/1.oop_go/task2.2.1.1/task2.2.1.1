@@ -1,0 +1,51 @@
+Задание
+
+Напиши программу на языке Golang, которая демонстрирует применение абстракции на примере
+банковского счета.
+
+В программе должны быть реализованы интерфейс Account и две структуры CurrentAccount и
+SavingsAccount, представляющие текущий и сберегательный счеты соответственно.
+
+Каждая структура должна иметь методы Deposit, Withdraw и Balance, которые позволяют вносить деньги
+на счет, снимать деньги со счета и получать текущий баланс.
+
+package main
+
+import (
+	"fmt"
+)
+
+type Accounter interface {
+	Deposit(amount float64) error
+	Withdraw(amount float64) error
+	Balance() float64
+}
+type CurrentAccount struct {
+	balance float64
+}
+
+func ProcessAccount(a Accounter) {
+	a.Deposit(500)
+	a.Withdraw(200)
+	fmt.Printf("Balance: %.2f\n", a.Balance())
+}
+func main() {
+	c := &CurrentAccount{}
+	s := &SavingsAccount{}
+	ProcessAccount(c)
+	ProcessAccount(s)
+}
+
+
+Критерии приемки
+
+Программа должна содержать интерфейс Account, структуры CurrentAccount и SavingsAccount, а
+также методы Deposit, Withdraw и Balance для каждой структуры.
+SavingsAccount не должен позволять снимать деньги со счета, если на счету меньше 500
+Метод Withdraw должен позволять снимать положительные суммы со счета, при условии наличия
+достаточного баланса.
+Метод Balance должен возвращать текущий баланс счета.
+После выполнения операций в методе ProcessAccount для каждого счета должен быть выведен
+текущий баланс счета с точностью до двух знаков после запятой.
+
+Решение расположи по следующему пути: course2/2.oop/1.oop_go/task2.2.1.1
