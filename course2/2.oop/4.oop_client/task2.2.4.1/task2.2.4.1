@@ -1,0 +1,104 @@
+Задание
+
+Напиши клиент для Exmo API, используя язык программирования Golang. Реализуй клиент в стиле
+объектно-ориентированного программирования (ООП).
+
+В коде предоставлен пример структуры Exmo, которая реализует интерфейс Exchanger. Дополни эту
+структуру и реализуй все методы интерфейса, используя http.Client для выполнения запросов к API Exmo.
+
+Примеры методов, которые нужно реализовать:
+
+GetTicker(): получает информацию о текущих курсах валют.
+GetTrades(pairs ...string): получает список сделок по указанным парам валют.
+GetOrderBook(limit int, pairs ...string): получает информацию о стакане по указанным парам валют.
+GetCurrency(): получает список доступных валют.
+GetCandlesHistory(pair string, limit int, start, end int64): получает историю свечей по указанной паре
+валют.
+
+Ты можешь использовать предоставленные функции NewExmo, WithClient и WithURL для создания
+экземпляра структуры Exmo с заданными параметрами.
+
+"fmt"
+"io"
+"io/ioutil"
+"net/http"
+"net/url"
+"strings"
+"time"
+)
+
+const (
+	ticker         = "/ticker"
+	trades         = "/trades"
+	orderBook      = "/order_book"
+	currency       = "/currency"
+	candlesHistory = "/candles_history"
+)
+
+type CandlesHistory struct {
+	Candles []Candle `json:"candles"`
+}
+
+type Currencies []string
+
+type OrderBook map[string]OrderBookPair
+
+type Ticker map[string]TickerValue
+
+type Trades map[string][]Pair
+
+type Exchanger interface {
+	GetTicker() (Ticker, error)
+	GetTrades(pairs ...string) (Trades, error)
+	GetOrderBook(limit int, pairs ...string) (OrderBook, error)
+	GetCurrencies() (Currencies, error)
+	GetCandlesHistory(pair string, limit int, start, end time.Time) (CandlesHistory, error)
+	GetClosePrice(pair string, limit int, start, end time.Time) ([]float64, error)
+}
+
+type Exmo struct {
+	client *http.Client
+	url    string
+}
+
+func NewExmo(opts ...func(exmo *Exmo)) *Exmo
+
+func WithClient(client *http.Client) func(exmo *Exmo)
+
+func WithURL(url string) func(exmo *Exmo)
+
+func (e *Exmo) GetTicker() (Ticker, error) {
+	// Реализация метода GetTicker
+}
+
+// Другие методы...
+func main() {
+	var exchange Exchanger
+	exchange := NewExmo()
+	ticker, err := exchange.GetCandlesHistory("BTC_USD", 30, time.Now().Add(-time.Hour*24),
+		time.Now())
+	if err != nil {
+		return
+	}
+	fmt.Println(ticker)
+}
+
+Клиент реализован в стиле ООП.
+Конструктор NewExmo проставлет значения по умолчанию, если не переданы параметры.
+Метод GetTicker() возвращает информацию о текущих курсах валют.
+Метод GetTrades(pairs ...string) возвращает список сделок по указанным парам валют.
+Метод GetOrderBook(limit int, pairs ...string) возвращает информацию о стакане по указанным парам
+валют.
+Метод GetCurrency() возвращает список доступных валют.
+Метод GetCandlesHistory(pair string, limit int, start, end int64 возвращает историю свечей по указанной
+паре валют.
+Метод GetClosePrice(pair string, limit int, start, end int64) должен возвращать список цен закрытия
+свечей по указанной паре валют.
+Код на 100% покрыт unit тестами.
+
+Подсказки (спойлеры)
+
+Используй Postman для генерации кода на Golang.
+Воспользуйся сервисом quicktype.io для генерации структур на основе JSON-ответов API.
+
+Решение расположи по следующему пути: course2/2.oop/4.oop_client/task2.2.4.1

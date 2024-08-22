@@ -1,0 +1,66 @@
+Задание
+
+Реализуй хэш-карту на языке программирования Golang.
+Хэш-карта должна поддерживать операции Set(key string, value interface{}) для установки значения по
+ключу и Get(key string) (interface{}, bool) для получения значения по ключу.
+
+Методы принадлежат интерфейсу HashMaper
+
+Хэш-функция должна выбираться при создании хэш-карты с помощью функциональных опций.
+
+"fmt"
+"hash/crc32"
+"time"
+)
+
+func main() {
+	m := NewHashMap(16, WithHashCRC64())
+	since := MeassureTime(func() {
+		m.Set("key", "value")
+		if value, ok := m.Get("key"); ok {
+			fmt.Println(value)
+		}
+	})
+	fmt.Println(since)
+	m = NewHashMap(16, WithHashCRC32())
+	since = MeassureTime(func() {
+		m.Set("key", "value")
+		if value, ok := m.Get("key"); ok {
+			fmt.Println(value)
+		}
+	})
+	fmt.Println(since)
+	m = NewHashMap(16, WithHashCRC16())
+	since = MeassureTime(func() {
+		m.Set("key", "value")
+		if value, ok := m.Get("key"); ok {
+			fmt.Println(value)
+		}
+	})
+	fmt.Println(since)
+	m = NewHashMap(16, WithHashCRC8())
+	since = MeassureTime(func() {
+		m.Set("key", "value")
+		if value, ok := m.Get("key"); ok {
+			fmt.Println(value)
+		}
+	})
+	fmt.Println(since)
+}
+
+
+Критерии приемки
+
+Хэш-карта поддерживает операции Set(key string, value interface{}) и Get(key string) (interface{}, bool).
+В коде присутствует интерфейсный тип HashMaper с указанными методами.
+MeasureTime возвращает время выполнения функции.
+Хэш-функция выбирается при создании хэш-карты с помощью функциональных опций.
+При использовании хэш-функции CRC64 программа выводит время выполнения операций Set и Get.
+При использовании хэш-функции CRC32 программа выводит время выполнения операций Set и Get.
+При использовании хэш-функции CRC16 программа выводит время выполнения операций Set и Get.
+Все виды хэша покрыты бенчмарками.
+Код покрыт тестами на 100%.
+
+Подсказки:
+
+Решение расположи по следующему пути: course2/2.oop/3.oop_abstracon/task2.2.3.5

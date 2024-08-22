@@ -1,0 +1,43 @@
+Задание
+
+В этом коде представлен пример использования наследования и полиморфизма на примере интерфейса Mover.
+
+package main
+
+import "fmt"
+
+type Mover interface {
+	Move() string
+	Speed() int
+	MaxSpeed() int
+	MinSpeed() int
+}
+
+func main() {
+	var movers []Mover
+	fm := FastMover{BaseMover{100}}
+	sm := SlowMover{BaseMover{10}}
+	movers = append(movers, fm, sm)
+	for _, mover := range movers {
+		fmt.Println(mover.Move())
+		fmt.Println("Maximum speed:", mover.MaxSpeed())
+		fmt.Println("Minimum speed:", mover.MinSpeed())
+	}
+}
+
+
+Output:
+Fast mover! Moving at speed: 100
+Maximum speed: 120
+Minimum speed: 10
+
+Slow mover... Moving at speed: 10
+Maximum speed: 120
+Minimum speed: 10
+
+Критерии приемки
+
+Решение содержит описание кода и его структуру.
+Решение включает конечный результат программы, который будет выведен на экран при выполнении кода.
+
+Решение расположи по следующему пути: course2/2.oop/1.oop_go/task2.2.1.5

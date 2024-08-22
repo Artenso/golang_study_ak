@@ -1,0 +1,37 @@
+Задание
+
+Необходимо реализовать конструктор объекта Order с использованием функциональных опций.
+
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+type Order struct {
+    ID int
+    CustomerID string
+    Items []string
+    OrderDate time.Time
+}
+
+type OrderOption func(*Order)
+
+func main() {
+    order := NewOrder(1,
+    WithCustomerID("123"),
+    WithItems([]string{"item1", "item2"}),
+    WithOrderDate(time.Now()))
+    fmt.Printf("Order: %+v\n", order)
+}
+
+Критерии приемки
+
+Конструктор NewOrder создает объект типа Order с заданным ID.
+При использовании функциональных опций конструктор применяет соответствующие опции к
+создаваемому объекту.
+Если опции не переданы, соответствующие поля объекта Order остаются пустыми.
+Покрытие тестами 100%
+
+Решение расположи по следующему пути: course2/2.oop/2.oop_constructor/task2.2.2.1

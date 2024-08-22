@@ -1,0 +1,79 @@
+Задание
+
+Реализуй мигратор для SQL базы данных. В коде предоставлен шаблон структуры Migrator, который
+содержит метод Migrate, выполняющий создание таблицы для каждой модели, переданной в качестве
+аргумента.
+
+Дополни код, чтобы он работал корректно.
+
+"database/sql"
+"fmt"
+"log"
+_ "github.com/mattn/go-sqlite3"
+)
+
+type User struct {
+	ID        int    `db_field:"id" db_type:"SERIAL PRIMARY KEY"`
+	FirstName string `db_field:"first_name" db_type:"VARCHAR(100)"`
+	LastName  string `db_field:"last_name" db_type:"VARCHAR(100)"`
+	Email     string `db_field:"email" db_type:"VARCHAR(100) UNIQUE"`
+}
+
+func (u *User) TableName() string {
+	return "users"
+}
+
+type Tabler interface {
+	TableName() string
+}
+
+type SQLGenerator interface {
+	CreateTableSQL(table Tabler) string
+	CreateInsertSQL(model Tabler) string
+}
+
+func NewMigrator(db *sql.DB, sqlGenerator SQLGenerator) *Migrator {
+	return &Migrator{
+		db:           db,
+		sqlGenerator: sqlGenerator,
+	}
+}
+
+// Основная функция
+func main() {
+	// Подключение к SQLite БД
+	db, err := sql.Open("sqlite3", "file:my_database.db?cache=shared&mode=rwc")
+	if err != nil {
+		log.Fatalf("failed to connect to the database: %v", err)
+	}
+	// Создание мигратора с использованием вашего SQLGenerator
+	migrator := NewMigrator(db, YourSQLGeneratorInstance)
+	// Миграция таблицы User
+	if err := migrator.Migrate(&User{}); err != nil {
+		log.Fatalf("failed to migrate: %v", err)
+	}
+}
+
+Ошибка метода Migrate должна содержать информацию о модели и
+
+failed to create table for model %v: %v
+
+причине ошибки.
+
+Критерии приемки
+
+Реализована структура Migrator, содержащая поле db типа *sql.DB и поле sqlGenerator типа
+SQLGenerator.
+Реализован метод NewMigrator, который принимает db и sqlGenerator и возвращает новый экземпляр
+*Migrator.
+Реализован метод Migrate, который принимает переменное количество моделей типа Tabler и
+выполняет создание таблицы для каждой модели.
+В основной функции создан экземпляр Migrator с использованием твоего SQLGenerator.
+В решении присутствуют Интерфейсы.
+Выполнена миграция таблицы User.
+Программа успешно выполняется без ошибок.
+Покрытие тестами 100%
+
+Можно опираться на следующую реализацию
+
+Решение расположи по следующему пути: course2/2.oop/3.oop_abstraction/task2.2.3.4
