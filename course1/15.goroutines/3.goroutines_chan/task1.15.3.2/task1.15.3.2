@@ -1,0 +1,43 @@
+Задание
+
+Создай программу на языке Golang, которая ограничивает количество одновременно выполняющихся
+горутин с помощью каналов.
+
+Твоя программа должна иметь следующую структуру:
+
+func main() {
+	url := "https://httpbin.org/get"
+	parallelRequest := 5
+	requestCount := 50
+	result := benchRequest(url, parallelRequest, requestCount)
+	for i := 0; i < requestCount; i++ {
+		statusCode := <-result
+		if statusCode != 200 {
+			panic(fmt.Sprintf("Ошибка при отправке запроса: %d", statusCode))
+		}
+	}
+	fmt.Println("Все горутины завершили работу")
+}
+
+func benchRequest(url string, parallelRequest int, requestCount int) <-chan int {
+	//statusCode, err := httpRequest(url)
+}
+
+func httpRequest(url string) (int, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return 0, err
+	}
+	defer resp.Body.Close()
+	return resp.StatusCode, nil
+}
+
+Критерии приемки
+
+Должна быть реализована функция benchRequest, которая принимает на вход URL, количество
+параллельных запросов и общее количество запросов.
+Функция должна возвращать канал, в который будут отправляться статусы ответов от сервера.
+Количество горутин, выполняющих запросы, не должно превышать значение параметра parallelRequest.
+Все запросы должны быть выполнены с успешным статусом (код 200).
+
+Решение расположи по следующему пути: course1/15.gorounes/3.gorounes_chan/task1.15.3.2

@@ -1,0 +1,90 @@
+Задание
+
+Создай программу на языке Golang, которая реализует ограничение количества горутин с использованием
+каналов.
+
+Задача:
+
+type Order struct {
+	ID       int
+	Complete bool
+}
+
+var orders []*Order
+var completeOrders map[int]bool
+var wg sync.WaitGroup
+var processTimes chan time.Duration
+var sinceProgramStarted time.Duration
+var count int
+var limitCount int
+
+func main() {
+	count = 30
+	limitCount = 5
+	processTimes = make(chan time.Duration, count)
+	orders = GenerateOrders(count)
+	completeOrders = GenerateCompleteOrders(count)
+	programStart := time.Now()
+	LimitSpawnOrderProcessing(limitCount)
+	wg.Wait()
+	sinceProgramStarted = time.Since(programStart)
+	go func() {
+		time.Sleep(1 * time.Second)
+		close(processTimes)
+	}()
+	checkTimeDifference(limitCount)
+}
+
+func checkTimeDifference(limitCount int) {
+	// do not edit
+	var averageTime time.Duration
+	var orderProcessTotalTime time.Duration
+	var orderProcessedCount int
+	for v := range processTimes {
+		orderProcessedCount++
+		orderProcessTotalTime += v
+	}
+	if orderProcessedCount != count {
+		panic("orderProcessedCount != count")
+	}
+	averageTime = orderProcessTotalTime / time.Duration(orderProcessedCount)
+	println("orderProcessTotalTime", orderProcessTotalTime/time.Second)
+	println("averageTime", averageTime/time.Second)
+	println("sinceProgramStarted", sinceProgramStarted/time.Second)
+	println("sinceProgramStarted average", sinceProgramStarted/(time.Duration(orderProcessedCount)*time.Second))
+	println("orderProcessTotalTime - sinceProgramStarted", (orderProcessTotalTime-sinceProgramStarted)/time.Second)
+	if (orderProcessTotalTime/time.Duration(limitCount)-sinceProgramStarted)/time.Second > 0 {
+		panic("(orderProcessTotalTime-sinceProgramStarted)/time.Second > 0")
+	}
+}
+
+// Совершенно не ясно к чему этот кусок кода, но вроде пристроил и все работает...
+    time.Sleep(1 * time.Second)
+    processTimes <- time.Since(t)
+    wg.Done()
+}
+
+func LimitSpawnOrderProcessing(limitCount int) {
+	limit := make(chan struct{}, limitCount)
+	var t time.Time
+	// limit spawn OrderProcessing worker by variable limit
+}
+
+func GenerateOrders(count int) []*Order {
+	// generate uncomplete orders by count variable
+}
+func GenerateCompleteOrders(maxOrderID int) map[int]bool {
+	// chance 50% to generate map of complete order
+}
+
+Критерии приемки
+
+Количество активных горутин не должно превышать заданное ограничение.
+Все задачи должны быть выполнены за определенное время.
+Не должно быть расхождения времени выполнения sinceProgramStarted orderProcessTotalTime/limitCount.
+Функция OrderProcessing должна завершать Order, если ордер находится в completeOrders.
+Функция GenerateCompleteOrders должна генерировать завершенные ордеры с шансом 50%.
+Функция checkTimeDifference не должна быть модифицирована.
+Функция checkTimeDifference должна завершаться без паники.
+
+Решение расположи по следующему пути: course1/15.gorounes/3.gorounes_chan/task1.15.3.1

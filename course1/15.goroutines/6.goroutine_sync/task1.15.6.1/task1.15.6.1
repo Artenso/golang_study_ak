@@ -1,0 +1,38 @@
+Задание
+
+Реализуй функцию waitGroupExample, которая будет принимать в качестве аргументов функции goroutines
+типа func(n int) string. Функции goroutines должны выполняться параллельно. Каждая функция goroutines
+должна возвращать строку в формате “goroutine N done”, где N — номер горутины.
+Функция waitGroupExample должна возвращать результаты выполнения горутин, объединенные в одну
+строку, где каждый результат находится на отдельной строке.
+
+Пример использования
+
+package main
+
+import (
+	"fmt"
+)
+
+func waitGroupExample(goroutines ...func() string) string {
+	return result
+}
+
+func main() {
+	count := 1000
+	goroutines := make([]func() string, count)
+	for i := 0; i < count; i++ {
+		j := i
+		goroutines[i] = func() string {
+			return fmt.Sprintf("goroutine %d", j)
+		}
+	}
+	fmt.Println(waitGroupExample(goroutines...))
+}
+
+Критерии приемки
+
+Все горутины должны быть запущены параллельно.
+Каждая горутина должна возвращать строку в формате goroutine N done.
+Функция waitGroupExample должна возвращать результаты выполнения всех горутин, объединенные в
+одну строку, где каждый результат находится на отдельной строке.
