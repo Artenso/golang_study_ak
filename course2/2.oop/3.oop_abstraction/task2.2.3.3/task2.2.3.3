@@ -1,0 +1,51 @@
+Задание
+
+Напиши всю реализацию из прошлых шагов.
+
+func main() {
+    sqlGenerator := &SQLiteGenerator{}
+    fakeDataGenerator := &GoFakeitGenerator{}
+    user := User{}
+    sql := sqlGenerator.CreateTableSQL(&user)
+    fmt.Println(sql)
+    for i := 0; i < 34; i++ {
+        fakeUser := fakeDataGenerator.GenerateFakeUser()
+        query := sqlGenerator.CreateInsertSQL(&fakeUser)
+        fmt.Println(query)
+    }
+    queries := GenerateUserInserts(34)
+    for _, query := range queries {
+        fmt.Println(query)
+    }
+}
+
+Output:
+
+CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, first_name VARCHAR(100), last_name
+VARCHAR(100), email VARCHAR(100) UNIQUE);
+INSERT INTO users (id, first_name, last_name, email) VALUES (8289, 'Adah', 'Lynch',
+'priscillabaumbach@pfannerstill.biz');
+INSERT INTO users (id, first_name, last_name, email) VALUES (4039, 'Laila', 'Satterfield',
+'hadleybergnaum@rosenbaum.net');
+INSERT INTO users (id, first_name, last_name, email) VALUES (7208, 'Valentina', 'Bednar',
+'adelberthand@lebsack.biz');
+INSERT INTO users (id, first_name, last_name, email) VALUES (2589, 'Nettie', 'Effertz',
+'noahweissnat@kiehn.io');
+INSERT INTO users (id, first_name, last_name, email) VALUES (9452, 'Lucius', 'Roob',
+'hannabode@reinger.com');
+INSERT INTO users (id, first_name, last_name, email) VALUES (8508, 'Sienna', 'Romaguera',
+'anastasiacollins@eichmann.io');
+INSERT INTO users (id, first_name, last_name, email) VALUES (6659, 'Hermina', 'Klocko',
+'paxtonbrakus@bradtke.info');
+
+Критерии приемки
+
+Реализация соответствует требованиям первой задачи.
+Реализация проходит все приемочные тесты.
+Для реализации получения данных о полях структуры используется пакет reflect.
+Для генерации фейковых данных используется пакет gofakeit.
+Покрытие тестами 100%  
+
+Дополнительные материалы:
+
+Решение расположи по следующему пути: course2/2.oop/3.oop_abstracon/task2.2.3.3
