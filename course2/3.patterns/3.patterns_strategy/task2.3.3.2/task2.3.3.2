@@ -1,0 +1,182 @@
+Задание
+
+Создай структуру для паттерна стратегия.
+Структура должна иметь только один общий метод с аргументом стратегии. Стратегия должна быть
+интерфейсом.
+Получение индикатора EMA или SMA должно быть реализовано через стратегию.
+Используй следующий код:
+
+candles_history.go
+package main
+import "encoding/json"
+func UnmarshalCandlesHistory(data []byte) (CandlesHistory, error) {
+var r CandlesHistory
+err := json.Unmarshal(data, &r)
+return r, err
+}
+func (r *CandlesHistory) Marshal() ([]byte, error) {
+return json.Marshal(r)
+}
+type CandlesHistory struct {
+Candles []Candle `json:"candles"`
+}
+type Candle struct {
+T int64 `json:"t"`
+O float64 `json:"o"`
+C float64 `json:"c"`
+H float64 `json:"h"`
+L float64 `json:"l"`
+V float64 `json:"v"`
+}
+import "encoding/json"
+type Currencies []string
+func UnmarshalCurrencies(data []byte) (Currencies, error) {
+var r Currencies
+err := json.Unmarshal(data, &r)
+return r, err
+}
+func (r *Currencies) Marshal() ([]byte, error) {
+return json.Marshal(r)
+}
+
+order_book.go
+package main
+import "encoding/json"
+func UnmarshalOrderBook(data []byte) (OrderBook, error) {
+var r OrderBook
+err := json.Unmarshal(data, &r)
+return r, err
+}
+func (r *OrderBook) Marshal() ([]byte, error) {
+return json.Marshal(r)
+}
+type OrderBook map[string]OrderBookPair
+type OrderBookPair struct {
+AskQuantity string `json:"ask_quantity"`
+AskAmount string `json:"ask_amount"`
+AskTop string `json:"ask_top"`
+BidQuantity string `json:"bid_quantity"`
+BidAmount string `json:"bid_amount"`
+BidTop string `json:"bid_top"`
+Ask [][]string `json:"ask"`
+Bid [][]string `json:"bid"`
+}
+
+import "encoding/json"
+type Ticker map[string]TickerValue
+func UnmarshalTicker(data []byte) (Ticker, error) {
+var r Ticker
+err := json.Unmarshal(data, &r)
+return r, err
+}
+func (r *Ticker) Marshal() ([]byte, error) {
+return json.Marshal(r)
+}
+type TickerValue struct {
+BuyPrice string `json:"buy_price"`
+SellPrice string `json:"sell_price"`
+LastTrade string `json:"last_trade"`
+High string `json:"high"`
+Low string `json:"low"`
+Avg string `json:"avg"`
+Vol string `json:"vol"`
+VolCurr string `json:"vol_curr"`
+Updated int64 `json:"updated"`
+}
+
+trades.go
+package main
+import "encoding/json"
+func UnmarshalTrades(data []byte) (Trades, error) {
+var r Trades
+err := json.Unmarshal(data, &r)
+return r, err
+}
+func (r *Trades) Marshal() ([]byte, error) {
+return json.Marshal(r)
+}
+type Trades map[string][]Pair
+type Pair struct {
+TradeID int64 `json:"trade_id"`
+Date int64 `json:"date"`
+Type Type `json:"type"`
+Quantity string `json:"quantity"`
+Price string `json:"price"`
+Amount string `json:"amount"`
+}
+type Type string
+const (
+Buy Type = "buy"
+Sell Type = "sell"
+)
+
+import (
+"fmt"
+"log"
+)
+type GeneralIndicatorer interface {
+GetData(pair string, period int, from, to time.Time, indicator Indicatorer) ([]float64,
+error)
+}
+type Indicatorer interface {
+GetData(pair string, limit, period int, from, to time.Time) ([]float64, error)
+}
+// Функция для расчета простого скользящего среднего (SMA)
+func calculateSMA(data []float64, period int) []float64 {
+var sma = make([]float64, len(data)/period)
+for i := range sma {
+sum := 0
+for _, d := range data[i*period : i*period+period] {
+sum += d
+}
+sma[i] = sum / float64(period)
+}
+return sma
+}
+// Функция для расчета экспоненциального скользящего среднего (EMA)
+func calculateEMA(data []float64, period int) []float64 {
+if len(data) == 0 || period <= 0 {
+return nil
+}
+alpha := 2 / (float64(period) + 1.0)
+ema := make([]float64, len(data))
+ema[0] = data[0]
+for i := 1; i < len(data); i++ {
+ema[i] = alpha*data[i] + (1-alpha)*ema[i-1]
+}
+return ema
+}
+type Exchanger interface {
+GetTicker() (Ticker, error)
+GetTrades(pairs ...string) (Trades, error)
+GetOrderBook(limit int, pairs ...string) (OrderBook, error)
+GetCurrencies() (Currencies, error)
+GetCandlesHistory(pair string, resolution int, start, end time.Time) (CandlesHistory, error)
+GetClosePrice(pair string, resolution int, start, end time.Time) ([]float64, error)
+}
+func main() {
+var exchange Exchanger
+exchange = NewExmo()
+indicatorSMA := NewIndicatorSMA(exchange)
+generalIndicator := &GeneralIndicator{}
+sma, err := generalIndicator.GetData("BTC_USD", 30, time.Now().Add(-time.Hour*24*5),
+time.Now(), indicatorSMA)
+if err != nil {
+    indicatorEMA := NewIndicatorEMA(exchange)
+ema, err := generalIndicator.GetData("BTC_USD", 30, time.Now().Add(-time.Hour*24*5),
+time.Now(), indicatorEMA)
+if err != nil {
+log.Fatal(err)
+}
+fmt.Println(ema)
+}
+
+Критерии приемки
+
+Реализован GeneralIndicatorer интерфейс с использованием паттерна стратегия.
+Реализованы два индикатора SMA и EMA на интерфейсе Indicatorer.
+Функция calculateEMA принимает данные вычисленные из функции calculateSMA.
+Период индикаторов постоянный равен 3, period передаваемый в GetData является периодом свечи.
+Код покрыт тестами с мок тестами на 100%.
+
+Решение расположи по следующему пути: course2/3.paerns/3.paerns_strategy/task2.3.3.2
