@@ -1,0 +1,40 @@
+Задание
+
+Необходимо разработать систему, которая будет симулировать работу банка и обеспечивать
+справедливый процесс обслуживания клиентов. Клиенты приходят в банк и занимают очередь. При этом
+клиент, пришедший раньше, должен быть обслужен раньше в соответствии с принципом FIFO (первым
+пришел — первым обслужен).
+
+package main
+
+import "fmt"
+
+type Bank struct {
+	queue []string
+}
+
+func (b *Bank) AddClient(client string) {
+}
+
+func (b *Bank) ServeNextClient() string {
+}
+
+func main() {
+	bank := Bank{}
+	bank.AddClient("Client 1")
+	bank.AddClient("Client 2")
+	bank.AddClient("Client 3")
+	fmt.Println(bank.ServeNextClient()) // Output: Client 1
+	fmt.Println(bank.ServeNextClient()) // Output: Client 2
+	fmt.Println(bank.ServeNextClient()) // Output: Client 3
+	fmt.Println(bank.ServeNextClient()) // Output: No clients in the queue
+}
+
+
+Критерии приемки
+
+Клиенты добавлены в очередь в порядке их прихода.
+Клиенты обслужены в порядке очереди (FIFO).
+Система отслеживает клиентов и обслуживающий персонал.
+Каждый клиент обслужен только один раз.
+После обслуживания клиента его данные удаляются из системы.

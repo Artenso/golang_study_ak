@@ -1,0 +1,79 @@
+Задание
+
+В этом коде представлена реализация бинарного дерева поиска на языке программирования Golang.
+Бинарное дерево используется для хранения данных пользователей. Каждый узел дерева содержит
+информацию о пользователе, включая идентификатор (ID), имя (Name) и возраст (Age).
+
+Класс BinaryTree представляет собой структуру данных бинарного дерева, а класс Node представляет узел
+дерева. Методы insert и search позволяют вставлять новых пользователей в дерево и выполнять поиск
+пользователей по их идентификатору.
+
+Также в коде присутствует функция generateData, которая генерирует случайные данные пользователей и
+вставляет их в бинарное дерево.
+
+"fmt"
+"math/rand"
+"time"
+)
+
+type User struct {
+	ID   int
+	Name string
+	Age  int
+}
+type Node struct {
+	index int
+	data  *User
+	left  *Node
+	right *Node
+}
+type BinaryTree struct {
+	root *Node
+}
+
+func (t *BinaryTree) insert(user *User) *BinaryTree {
+}
+
+func (n *Node) insert(user *User) {
+}
+
+func (t *BinaryTree) search(key int) *User {
+}
+
+func (n *Node) search(key int) *User {
+}
+
+func generateData(n int) *BinaryTree {
+	rand.Seed(time.Now().UnixNano())
+	bt := &BinaryTree{}
+	for i := 0; i < n; i++ {
+		val := rand.Intn(100)
+		bt.insert(&User{
+			ID:   val,
+			Name: fmt.Sprintf("User%d", val),
+			Age:  rand.Intn(50) + 20,
+		})
+	}
+	return bt
+}
+
+func main() {
+	bt := generateData(50)
+	user := bt.search(30)
+	if user != nil {
+		fmt.Printf("Найден пользователь: %+v\n", user)
+	} else {
+		fmt.Println("Пользователь не найден")
+	}
+}
+
+Критерии приемки
+
+Определены структуры данных User, Node и BinaryTree.
+Реализован метод insert для вставки пользователей в бинарное дерево.
+Функция generateData генерирует случайные данные пользователей и вставляет их в бинарное
+дерево.
+Выводится информация о найденном пользователе, если он существует.
+Выводится сообщение «Пользователь не найден», если пользователь не найден.
+
+Решение расположи по следующему пути: course2/4.algo_datastruct/4.datastruct_tree/task2.4.4.1

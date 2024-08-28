@@ -1,0 +1,42 @@
+Задание
+
+Напиши две функции на языке Go, которые вычисляют факториал числа: одну с использованием рекурсии,
+а другую — с использованием цикла. Сравни время выполнения обеих функций для различных значений
+входных данных (от 10 до 100 с шагом 10).
+
+Подсказка: факториал числа n (обозначается n!) — это произведение всех положительных целых чисел от 1
+до n.
+
+package main
+
+import (
+"fmt"
+"runtime"
+"time"
+)
+
+func factorialRecursive(n int) int {
+}
+
+func factorialIterative(n int) int {
+}
+
+// выдает true, если реализация быстрее и false, если медленнее
+func compareWhichFactorialIsFaster() map[string]bool {
+}
+
+func main() {
+	fmt.Println("Go version:", runtime.Version())
+	fmt.Println("Go OS/Arch:", runtime.GOOS, "/", runtime.GOARCH)
+	fmt.Println("Which factorial is faster?")
+	fmt.Println(compareWhichFactorialIsFaster())
+}
+
+Критерии приемки
+
+Функция factorialRecursive должна правильно вычислять факториал числа с использованием рекурсии.
+Время выполнения функции factorialRecursive должно быть сравнено с временем выполнения
+функции factorialIterative для значений входных данных 100000
+Код покрыт тестами на 100%.
+
+Решение расположи по следующему пути: course2/4.algo_datastruct/1.algo_big_o/task2.4.1.1

@@ -1,0 +1,203 @@
+Задание
+
+Цель этой задачи — научиться работать со структурой данных linked list.
+
+Реализуй загрузку данных в двусвязный список (double linked list) с использованием метода LoadData.
+
+Путь до файла с данными будет передан в качестве аргумента path. При загрузке данных отсортируй их с
+помощью самописного алгоритма QuickSort по дате.
+
+Также допишиь недостающие методы в интерфейсе LinkedLister и реализуй их в классе DoubleLinkedList.
+Для проверки правильности реализации напиши тесты и бенчмарки для всех методов.
+
+Задача:
+
+package main
+
+import (
+	"encoding/json"
+	"errors"
+	"os"
+	"time"
+
+	"github.com/brianvoe/gofakeit"
+)
+
+type Node struct {
+	data *Commit
+	prev *Node
+	next *Node
+}
+type DoubleLinkedList struct {
+	head *Node // начальный элемент в списке
+	tail *Node // последний элемент в списке
+	curr *Node // текущий элемент меняется при использовании методов next, prev
+	len  int   // количество элементов в списке
+}
+type LinkedLister interface {
+	LoadData(path string) error
+	Init(c []Commit)
+	Len() int
+	SetCurrent(n int) error
+	Current() *Node
+	Next() *Node
+	Prev() *Node
+	Insert(n int, c Commit) error
+	Push(c Commit) error
+	Delete(n int) error
+	DeleteCurrent() error
+	Index() (int, error)
+	GetByIndex(n int) (*Node, error)
+	Pop() *Node
+	Shift() *Node
+	SearchUUID(uuID string) *Node
+	Search(message string) *Node
+	Reverse() *DoubleLinkedList
+}
+
+// LoadData loads data from a JSON file at the given path into the list.
+func (d *DoubleLinkedList) LoadData(path string) error {
+	bytes, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+	var commits []Commit
+	if err := json.Unmarshal(bytes, &commits); err != nil {
+		return err
+	}
+	QuickSort(commits)
+	d.Init(commits)
+	return nil
+}
+
+// Len получение длины списка
+func (d *DoubleLinkedList) Len() int {
+	panic("implement me")
+}
+
+// Current получение текущего элемента
+func (d *DoubleLinkedList) Current() *Node {
+	panic("implement me")
+}
+
+// Next получение следующего элемента
+func (d *DoubleLinkedList) Next() *Node {
+	panic("implement me")
+}
+func (d *DoubleLinkedList) Prev() *Node {
+	panic("implement me")
+}
+
+// Insert вставка элемента после n элемента
+// Insert inserts a new node with commit c at position n.
+func (d *DoubleLinkedList) Insert(n int, c Commit) error {
+	if n < 0 || n > d.len {
+		return errors.New("index out of bounds")
+	}
+	newNode := &Node{data: &c}
+	if n == 0 {
+		if d.head == nil {
+			d.head = newNode
+			d.tail = newNode
+		} else {
+			newNode.next = d.head
+			d.head.prev = newNode
+			d.head = newNode
+		}
+	} else if n == d.len {
+		d.tail.next = newNode
+		newNode.prev = d.tail
+		d.tail = newNode
+	} else {
+		current := d.head
+		for i := 0; i < n; i++ {
+			current = current.next
+		}
+		newNode.next = current
+		newNode.prev = current.prev
+		current.prev.next = newNode
+		current.prev = newNode
+	}
+	d.len++
+	return nil
+}
+
+// Delete удаление n элемента
+func (d *DoubleLinkedList) Delete(n int) error {
+	panic("implement me")
+}
+
+// DeleteCurrent удаление текущего элемента
+func (d *DoubleLinkedList) DeleteCurrent() error {
+	panic("implement me")
+}
+
+// Index получение индекса текущего элемента
+func (d *DoubleLinkedList) Index() (int, error) {
+	panic("implement me")
+}
+
+// Pop Операция Pop
+func (d *DoubleLinkedList) Pop() *Node {
+	panic("implement me")
+}
+
+// Shift операция shift
+func (d *DoubleLinkedList) Shift() *Node {
+	panic("implement me")
+}
+
+// SearchUUID поиск коммита по uuid
+func (d *DoubleLinkedList) SearchUUID(uuID string) *Node {
+	panic("implement me")
+}
+
+// panic("implement me")
+// }
+// Reverse возвращает перевернутый список
+func (d *DoubleLinkedList) Reverse() *DoubleLinkedList {
+	panic("implement me")
+}
+
+type Commit struct {
+	Message string `json:"message"`
+	UUID    string `json:"uuid"`
+	Date    string `json:"date"`
+}
+
+func QuickSort(commits []Commit) {
+	// реализация алгоритма QuickSort
+}
+func GenerateData(numCommits int) []Commit {
+	var commits []Commit
+	gofakeit.Seed(0) // Initialize the random seed
+	// Define how many commits you want to generate
+	for i := 0; i < numCommits; i++ {
+		commit := Commit{
+			Message: gofakeit.Sentence(5),
+			// Generate a random sentence with 5 words
+			UUID: gofakeit.UUID(),
+			// Generate a random UUID
+			Date: gofakeit.DateRange(time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
+				time.Date(2022, 12, 31, 0, 0, 0, 0, time.UTC)).Format("2006-01-02"), // Generate a random date between 2020 and 2022
+		}
+		commits = append(commits, commit)
+	}
+	return commits
+}
+
+Для работы с датой используй следующий способ:
+
+date1, _ := time.Parse("2006-01-02", commits[i].Date)
+date2, _ := time.Parse("2006-01-02", commits[i+1].Date)
+
+Критерии приемки
+
+Интерфейс LinkedLister реализован полностью.
+Загрузка данных в double linked list реализована через метод LoadData, где path — это путь до .
+Загружаемые данные при постройке листа отсортированы самописным QuickSort по дате.
+В интерфейсе LinkedLister дописаны недостающие методы.
+Реализованы все методы в DoubleLinkedList.
+Покрытие тестами составляет 100%.
+
+Решение расположи по следующему пути: course2/4.algo_datastruct/3.datastruct_list/task2.4.3.1
