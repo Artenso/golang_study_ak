@@ -1,0 +1,63 @@
+Задание
+
+Тебе предоставлен код на языке Golang, который содержит структуры и методы для сортировки списка
+продуктов.
+
+Дополни код, чтобы список продуктов был отсортирован по различным критериям, таким как цена, дата
+создания и количество.
+
+"fmt"
+"github.com/brianvoe/gofakeit/v6"
+"sort"
+"time"
+)
+type Product struct {
+Name string
+Price float64
+CreatedAt time.Time
+Count int
+}
+func (p Product) String() string {
+return fmt.Sprintf("Name: %s, Price: %f, Count: %v", p.Name, p.Price, p.Count)
+}
+func generateProducts(n int) []Product {
+gofakeit.Seed(time.Now().UnixNano())
+products := make([]Product, n)
+for i := range products {
+products[i] = Product{
+Name: gofakeit.Word(),
+Price: gofakeit.Price(1.0, 100.0),
+CreatedAt: gofakeit.Date(),
+Count: gofakeit.Number(1, 100),
+}
+}
+return products
+}
+func main() {
+products := generateProducts(10)
+fmt.Println("Исходный список:")
+fmt.Println(products)
+// Сортировка продуктов по цене
+sort.Sort(ByPrice(products))
+fmt.Println("\nОтсортировано по цене:")
+fmt.Println(products)
+// Сортировка продуктов по дате создания
+sort.Sort(ByCreatedAt(products))
+fmt.Println("\nОтсортировано по дате создания:")
+fmt.Println(products)
+// Сортировка продуктов по количеству
+sort.Sort(ByCount(products))
+fmt.Println("\nОтсортировано по количеству:")
+fmt.Println(products)
+}
+
+Критерии приемки
+
+Список продуктов должен быть отсортирован по цене.
+Список продуктов должен быть отсортирован по дате создания.
+Список продуктов должен быть отсортирован по количеству.
+Изучи код и объясни, как работает интерфейс sort.Interface.
+Реализуй необходимые методы для каждого типа сортировки (ByPrice, ByCreatedAt, ByCount).
+Код покрыт тестами на 100%.
+
+Решение расположи по следующему пути: course2/4.algo_datastruct/2.algo_sort/task2.4.2.1
