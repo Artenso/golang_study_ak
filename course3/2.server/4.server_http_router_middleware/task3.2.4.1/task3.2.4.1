@@ -1,0 +1,42 @@
+Задание
+
+Создай сервер на пакете go-chi. Сервер должен содержать несколько маршрутов с различными методами.
+Все маршруты должны быть прологированы с помощью middleware-компонента logger.
+
+// Пример кода для создания сервера на go-chi
+package main
+
+import (
+    "net/http"
+    "github.com/go-chi/chi"
+    "github.com/go-chi/chi/middleware"
+)
+
+func main() {
+	r := chi.NewRouter()
+
+	http.ListenAndServe(":8080", r)
+}
+
+func handleRoute1(w http.ResponseWriter, r *http.Request) {
+	// Обработка маршрута 1
+}
+
+func handleRoute2(w http.ResponseWriter, r *http.Request) {
+	// Обработка маршрута 2
+}
+
+func handleRoute3(w http.ResponseWriter, r *http.Request) {
+	// Обработка маршрута 3
+}
+
+
+Критерии приемки
+
+Все маршруты должны быть доступны и работать корректно.
+При обращении к каждому маршруту должна быть запись в лог с информацией о запросе.
+В логе должна быть информация о методе запроса, URL и времени обработки запроса.
+Программа должна успешно запускаться и слушать порт 8080.
+Функционал должен быть покрыт тестами на 90%.
+
+Решение расположи по следующему пути: course3/2.server/4.server_http_router_middleware/task3.2.4.1

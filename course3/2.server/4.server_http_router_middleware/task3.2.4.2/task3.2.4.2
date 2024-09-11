@@ -1,0 +1,37 @@
+Задание
+
+Создай сервер на пакете go-chi.
+
+Сервер должен иметь несколько маршрутов с различными методами.
+
+Все маршруты должны быть зарегистрированы с использованием middleware для логирования с помощью
+zap logger.
+
+// Пример кода для создания сервера на go-chi
+package main
+
+import (
+    "net/http"
+    "github.com/go-chi/chi"
+    "go.uber.org/zap"
+)
+
+func main() {
+	r := chi.NewRouter()
+	// Применение middleware для логирования с помощью zap logger
+	// Здесь можно добавить ваши маршруты с различными методами
+	http.ListenAndServe(":8080", r)
+}
+func LoggerMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	})
+}
+
+Критерии приемки
+
+Логгер реализован с помощью zap logger для всех маршрутов.
+Логгер должен выводить в консоль информацию о пути, методе запроса и ip адресе клиента.
+Логгер должен быть настроен на уровень Info.
+Функционал должен быть покрыт тестами на 90%.
+
+Решение расположи по следующему пути: course3/2.server/4.server_http_router_middleware/task3.2.4.2
