@@ -1,0 +1,67 @@
+Задание
+
+GitHub Gist — это удобный способ создавать и делиться небольшими файлами в интернете.
+Пример:
+Представь что нам нужно получить список репозиториев и список gist’ов пользователя с помощью GitHub
+API.
+Мы можем использовать паттерн стратегия для решения этой задачи.
+Для получения репозитория мы используем GithubRepo удовлетворяющий интерфейсу GithubLister, а для
+получения gist’ов — GithubGist, так же удовлетворяющий интерфейсу GithubLister.
+Таким образом мы можем подставлять в GeneralGithubLister разные стратегии для получения списка
+репозиториев и gist’ов.
+Структура должна иметь только один общий метод, принимающий аргумент стратегии. Стратегия должна
+быть интерфейсом.
+Два возможных варианта стратегии — получение списка репозиториев и получение списка gist’ов с
+помощью GitHub API.
+Используй предоставленный код для генерации:
+
+"context"
+"fmt"
+"github.com/google/go-github/v53/github"
+"golang.org/x/oauth2"
+"log"
+)
+type Item struct {
+	Title    string
+	Описание string
+	Link     string
+}
+type GithubLister interface {
+	GetItems(ctx context.Context, username string) ([]Item, error)
+}
+type GeneralGithubLister interface {
+	GetItems(ctx context.Context, username string, strategy GithubLister) ([]Item, error)
+}
+
+func main() {
+	ctx := context.Background()
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: "your-access-token"},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+	client := github.NewClient(tc)
+	gist := NewGithubGist(client)
+	repo := NewGithubRepo(client)
+	gg := NewGeneralGithub(client)
+	data, err := gg.GetItems(context.Background(), "ptflp", gist)
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(data)
+	data, err = gg.GetItems(context.Background(), "ptflp", repo)
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(data)
+}
+
+Критерии приемки
+
+Создана структура для паттерна стратегия
+Структура имеет только один метод, принимающий аргумент стратегии
+Стратегия является интерфейсом
+Реализована стратегия для получения списка репозиториев с помощью GitHub API
+Реализована стратегия для получения списка gist’ов с помощью GitHub API
+Методы стратегий возвращают список элементов (Item) с правильными значениями полей (Title,
+Описание, Link)
+Код покрыт тестами с мок тестами на 100%
