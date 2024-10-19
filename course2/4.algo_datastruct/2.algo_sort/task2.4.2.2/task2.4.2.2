@@ -1,0 +1,36 @@
+Задание
+
+Реализуй алгоритмы Insertion Sort, Selection Sort, Quicksort, and Merge Sort. Таким же образом реализуй
+функцию GeneralSort.
+
+package main
+import "fmt"
+func GeneralSort(arr []int) {
+// выбор эффективного алгоритма сортировки в зависимости от размера входного массива
+}
+func main() {
+data := []int{64, 34, 25, 12, 22, 11, 90}
+fmt.Println("Original: ", data)
+sortedData := mergeSort(data)
+fmt.Println("Sorted by Merge Sort: ", sortedData)
+data = []int{64, 34, 25, 12, 22, 11, 90}
+insertionSort(data)
+fmt.Println("Sorted by Insertion Sort: ", data)
+data = []int{64, 34, 25, 12, 22, 11, 90}
+selectionSort(data)
+fmt.Println("Sorted by Selection Sort: ", data)
+data = []int{64, 34, 25, 12, 22, 11, 90}
+sortedData = quicksort(data)
+fmt.Println("Sorted by Quicksort: ", sortedData)
+data = []int{64, 34, 25, 12, 22, 11, 90}
+GeneralSort(data)
+fmt.Println("Sorted by GeneralSort: ", data)
+}
+
+Критерии приемки
+
+Реализованы четыре алгоритма сортировки: Insertion Sort, Selection Sort, Quicksort, Merge Sort.
+Алгоритмы сортировки реализованы в отдельных функциях.
+Код покрыт тестами на 100%.
+
+Решение расположи по следующему пути: course2/4.algo_datastruct/2.algo_sort/task2.4.2.2
